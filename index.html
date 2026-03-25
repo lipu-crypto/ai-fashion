@@ -892,7 +892,7 @@ function buildCard(step,i){
           <button class="del-btn" onclick="delStep('${step.id}')">🗑 删除</button>
         </div>
       </div>
-      <div class="video-col">
+      ${step.hideVideo ? '' : `<div class="video-col">
         <div class="col-label">🎬 演示媒体</div>
         <div class="video-display" id="vbox_${step.id}"
           onclick="pickVideo('${step.id}')"
@@ -907,7 +907,7 @@ function buildCard(step,i){
           <button class="clr-btn" onclick="clearVideo('${step.id}')"
             ${hasMedia?'':'disabled'}>🗑 删除</button>
         </div>
-      </div>
+      </div>`}
     </div>
   `;
   return card;

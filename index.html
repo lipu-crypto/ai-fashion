@@ -1028,4 +1028,55 @@ function exportSelfContained(){
   });
 })();
 </script>
+
+<!-- 浮动微信联系卡片 __WECHAT_FLOAT__ -->
+<div id="wechatFloat" style="position:fixed;right:18px;bottom:80px;z-index:9999;display:flex;flex-direction:column;align-items:flex-end;gap:10px;font-family:'PingFang SC','Microsoft YaHei',sans-serif;">
+  <div id="wechatCard" style="background:linear-gradient(135deg,#1a1a3e,#0d1b2a);border:1px solid rgba(124,58,237,0.5);border-radius:16px;padding:16px 18px;box-shadow:0 8px 32px rgba(0,0,0,0.5);min-width:180px;display:none;">
+    <div style="font-size:11px;color:#9ca3af;margin-bottom:8px;letter-spacing:1px;">🤝 联系我</div>
+    <div style="font-size:13px;color:#e5e7eb;margin-bottom:6px;display:flex;align-items:center;gap:6px;">
+      <span style="font-size:16px;">💬</span>
+      <span id="wechatLabelText" style="font-weight:600;color:#fff;">微信号</span>
+    </div>
+    <div id="wechatIdText" style="font-size:15px;font-weight:700;color:#a78bfa;letter-spacing:1px;margin-bottom:10px;padding:6px 10px;background:rgba(124,58,237,0.15);border-radius:8px;word-break:break-all;">请在控制台设置</div>
+    <div id="wechatExtraText" style="font-size:11px;color:#6b7280;margin-top:2px;"></div>
+    <button onclick="copyWechatId(this)" style="margin-top:10px;width:100%;padding:7px 0;background:linear-gradient(135deg,#7c3aed,#4f46e5);border:none;border-radius:8px;color:#fff;font-size:12px;font-weight:600;cursor:pointer;">复制微信号</button>
+  </div>
+  <button id="wechatBtn" onclick="toggleWechatCard()" style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#4f46e5);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(124,58,237,0.6);font-size:24px;position:relative;">
+    💬
+    <span style="position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(124,58,237,0.5);animation:wechatRipple 2s infinite;"></span>
+  </button>
+</div>
+
+<style>
+@keyframes wechatRipple{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.5);opacity:0}}
+</style>
+
+<script>
+var __contactCfg = {wechatId:'__WECHAT_ID__',wechatLabel:'__WECHAT_LABEL__',wechatExtra:'__WECHAT_EXTRA__'};
+(function(){
+  var c=__contactCfg;
+  var el=document.getElementById('wechatIdText');
+  var ll=document.getElementById('wechatLabelText');
+  var ex=document.getElementById('wechatExtraText');
+  if(el&&c.wechatId&&c.wechatId!='__WECHAT_ID__')el.textContent=c.wechatId;
+  if(ll&&c.wechatLabel&&c.wechatLabel!='__WECHAT_LABEL__')ll.textContent=c.wechatLabel;
+  if(ex&&c.wechatExtra&&c.wechatExtra!='__WECHAT_EXTRA__')ex.textContent=c.wechatExtra;
+})();
+function toggleWechatCard(){
+  var c=document.getElementById('wechatCard');
+  c.style.display=c.style.display==='none'?'block':'none';
+}
+function copyWechatId(btn){
+  var id=document.getElementById('wechatIdText').textContent;
+  if(navigator.clipboard){navigator.clipboard.writeText(id);}
+  else{var t=document.createElement('textarea');t.value=id;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);}
+  btn.textContent='✅ 已复制！';
+  setTimeout(function(){btn.textContent='复制微信号';},1500);
+}
+document.addEventListener('click',function(e){
+  var fl=document.getElementById('wechatFloat');
+  var cd=document.getElementById('wechatCard');
+  if(fl&&cd&&!fl.contains(e.target))cd.style.display='none';
+});
+</script>
 </body></html>
